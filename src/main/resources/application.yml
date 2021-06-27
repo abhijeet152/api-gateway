@@ -31,4 +31,10 @@
               - Path=/clubs/**
             filters:
               - StripPrefix=1
+          - id: service-panel1-id
+            uri: lb://panel1-service
+            predicates:
+              - Path=/panels1/**
+            filters:
+              - StripPrefix=1
 
