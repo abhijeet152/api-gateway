@@ -9,6 +9,10 @@ Here `servicename` is various qrebl-services followed by the url of respective s
 * Port - 9100
 * Service Name - panels1
 
+## Match Upload Service
+* Port - 9400
+* Service Name - match-upload
+
 > To view wheather the services are registered to got `http://localhost:8761` after starting eureka. The port of eureka is 8761
 
 **Note :** To run any request please activate eureka first then all other services including gateway

@@ -37,4 +37,10 @@
               - Path=/panels1/**
             filters:
               - StripPrefix=1
+          - id: service-match-upload-id
+            uri: lb://match-upload-service
+            predicates:
+              - Path=/match-upload/**
+            filters:
+              - StripPrefix=1
 
