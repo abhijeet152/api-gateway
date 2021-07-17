@@ -1,46 +1,51 @@
-  server:
-    port: 8080
-
-  eureka:
-    client:
-      serviceUrl:
-        defaultZone: http://localhost:8761/eureka
-  management:
-    endpoint:
-      gateway:
-        enable: true
-    endpoints:
-      web:
-        exposure:
-          include: gateway
-
-
-  spring:
-    application:
-      name: gateway-service
-    cloud:
-      gateway:
-        discovery:
-          locator:
-            enabled: true
-            lower-case-service-id: true
-        routes:
-          - id: service-club-id
-            uri: lb://club-service
-            predicates:
-              - Path=/clubs/**
-            filters:
-              - StripPrefix=1
-          - id: service-panel1-id
-            uri: lb://panel1-service
-            predicates:
-              - Path=/panels1/**
-            filters:
-              - StripPrefix=1
-          - id: service-match-upload-id
-            uri: lb://match-upload-service
-            predicates:
-              - Path=/match-upload/**
-            filters:
-              - StripPrefix=1
-
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka
+management:
+  endpoint:
+    gateway:
+      enable: true
+  endpoints:
+    web:
+      exposure:
+        include: gateway
+server:
+  port: 8080
+spring:
+  application:
+    name: api-gateway
+  cloud:
+    gateway:
+      default-filters: TokenRelay
+      globalcors:
+        corsConfigurations:
+          '[/**]':
+#            allowedOrigins: "https://www.javarubberduck.com"
+#            allowedHeaders:
+#              - content-type
+#            allowedMethods:
+#              - GET
+#              - POST
+#              - DELETE
+            allowedOrigins: "*"
+            allowedMethods: "*"
+            allowedHeaders: "*"
+      discovery:
+        locator:
+          lower-case-service-id: true
+      routes:
+#        -   id: service-club-id
+#            predicates:
+#              - Path=/api/v1/**
+#            uri: lb://club-service
+        - id: service-club-id
+          uri: lb://club-service
+          predicates:
+            - Path=/clubs/**
+          filters:
+            - StripPrefix=1
+  security:
+    basic:
+      enable: false
+    ignored: /**
